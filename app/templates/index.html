@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз соотношения матрица-наполнитель</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1E1E20; /* Фон бэкграунда */
+            color: #292929; /* Основной шрифт */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #FFFFFF; /* Цвет контейнера */
+            padding: 32px;
+            border-radius: 12px; /* Скругленные углы */
+        }
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 0 0 8px;
+        }
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            text-align: center;
+            margin: 0 0 28px;
+            color: #292929; /* Цвет побочного шрифта */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        label {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        label span {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: #292929; /* Цвет шрифта параметров */
+        }
+        input[type="text"] {
+            padding: 12px 14px;
+            border: 1px solid #292929; /* Рамка у окошек ввода */
+            border-radius: 8px;
+            background-color: #292929; /* Цвет окошек ввода */
+            font-size: 1rem;
+            color:#E3E3E3;
+            transition: border-color 0.2s ease;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #E5742A; /* Акцентный цвет при выборе окошка ввода */
+        }
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+        .btn-submit {
+            background-color: #292929; /* Основной цвет кнопки Готово */
+            color: #E3E3E3;
+        }
+        .btn-submit:hover {
+            background-color: #73939C; /* Контрастный цвет кнопки Готово при наведении */
+            color: #BAD2D9;
+            transform: translateY(-1px);
+        }
+        .btn-clear {
+            background-color: #292929; /* Основной цвет кнопки Очистить */
+            color: #E3E3E3;
+        }
+        .btn-clear:hover {
+            background-color: #9B7754; /* Контрастный цвет кнопки Очистить при наведении */
+            color: #E6C9AD;
+            transform: translateY(-1px);
+        }
+        .result {
+            margin-top: 32px;
+            padding: 20px;
+            background-color: #BAD2D9; /* Цвет фона для результата */
+            border-radius: 10px;
+            font-size: 1.25rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        .result strong {
+            color: #607D85;
+        }
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Прогнозное значение параметра<br>«Соотношение матрица-наполнитель»</h1>
+        <h2>Заполните поля и нажмите «Готово»</h2>
+        <form method="POST" id="predictionForm">
+            {% for feature in features_for_ratio %}
+                <label>
+                    <span>{{ feature }}</span>
+                    <!-- Сохраняю введённые значения после отправки формы -->
+                    <input
+                        type="text"
+                        name="{{ feature }}"
+                        value="{{ request.form.get(feature, '') }}"
+                        required
+                    >
+                </label>
+            {% endfor %}
+            <div class="button-group">
+                <button type="submit" class="btn btn-submit">Готово</button>
+                <button type="button" class="btn btn-clear" onclick="clearForm()">Очистить</button>
+            </div>
+        </form>
+
+        {% if result is not none %}
+            <div class="result">
+                Результат прогноза: <strong>{{ result }}</strong>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Реализую очистку полей ввода
+        function clearForm() {
+            document.querySelectorAll('#predictionForm input[type="text"]').forEach(input => {
+                input.value = '';
+            });
+        }
+    </script>
+</body>
+</html>
