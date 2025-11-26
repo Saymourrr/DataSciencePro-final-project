@@ -19,7 +19,7 @@
 
 Исходные данные:
 1. [`X_bp.xlsx`](X_bp.xlsx) — параметры связующего и итоговые свойства
-2. [`X_nup.xlsx`](https://drive.google.com/file/d/1B1s5gBlvgU81H9GGolLQVw_SOi-vyNf2/view) — параметры армирующего компонента (нашивки)
+2. [`X_nup.xlsx`](X_nup.xlsx) — параметры армирующего компонента (нашивки)
 <br>
 
 - **Объединение**: `inner join` по индексу  
@@ -71,7 +71,7 @@
 1. Установите зависимости:
    ```bash
    pip install flask tensorflow pandas numpy
-2. Распакуйте архив `composite_app.zip`
+2. Скачайте и распакуйте архив [`composite_app.zip`](composite_app.zip)
 3. Перейдите в папку `app` и кликните на адресную строку:
    ```bash
    cmd
